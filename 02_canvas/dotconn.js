@@ -1,22 +1,24 @@
 //Britni Canale & Jabir Chowdhury -- Paint2.0
 //SoftDev2 pd6
-//K02 -- And I want to paint it Better
+//K02 -- Connecting the Dots
 //2019 - 02 - 01
 
 var c = document.getElementById("playground");
 var ctx = c.getContext("2d");
+
+var prevx = NaN;
+var prevy = NaN;
 
 var b = document.getElementById("clear");
 b.addEventListener('click',
   function(e){
     e.preventDefault();//in place to avoid default functionfrom event if there is a default
     ctx.clearRect(0,0,600,600);
+    prevx = NaN;
+    prevy = NaN;
     console.log(e);
   }
 );
-
-var prevx = NaN;
-var prevy = NaN;
 
 c.addEventListener('click',
   function(e){
