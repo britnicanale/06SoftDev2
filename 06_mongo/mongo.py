@@ -33,13 +33,19 @@ def zipbadgrade(zip, grade):
 
 def distanceFrom(lat, long, dist):
     food = collection.find()
+    sorted_list = [] # gets sorted, least to greatest
+    w = {} # dictionary for easy access to sorted items
     for place in food:
         #print(place["address"]["coord"])
         if place["address"]["coord"] != []:
             distanceB = distance(place["address"]["coord"][1], place["address"]["coord"][0], lat, long)
             if distanceB < dist:
-                print(place["name"])
-                print(distanceB)
+                w[distanceB] = place['name']
+                sorted_list.append(distanceB)
+    sorted_list.sort()
+    for item in sorted_list:
+        print(item)
+        print(w[item])
 
 
 #Haservine formula from https://www.movable-type.co.uk/scripts/latlong.html
@@ -61,7 +67,9 @@ def distance(latOne, longOne, latTwo, longTwo):
     #print(distance)
     return distance
 
-
-distance(0, 0, 25, 25)
+borough("Queens")
+zipcode("10282")
+zipgoodgrade("11413", "A")
+zipbadgrade("11231", "B")
+# distance(0, 0, 25, 25)
 distanceFrom(40.7178, -74.0139, 0.5)
-#zipcode("10282")
