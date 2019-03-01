@@ -22,14 +22,16 @@ var requestID = 0; //initial requestID
 var rectWidth = 100; //height of image
 var rectHeight = 50; //width of image
 
-var rectX = Math.floor(Math.random() * (c.width-rectWidth));
-var rectY = Math.floor(Math.random() * (c.height-rectHeight));
+var rectX;
+var rectY;
 
 console.log(rectX + "," + rectY)
 console.log(c.width);
 
 var xVel = 1;
 var yVel = 1;
+
+var dvd;
 
 
 //Clear function
@@ -67,7 +69,7 @@ var drawDvd = function(){
   ctx.beginPath();
   var dvd = new Image()
   dvd.src = "logo_dvd.jpg";
-  ctx.fillRect(rectX- 1, rectY-1, rectWidth+2, rectHeight+2); //for testing
+  //ctx.fillRect(rectX- 1, rectY-1, rectWidth+2, rectHeight+2); //for testing
   ctx.drawImage(dvd, rectX, rectY, rectWidth, rectHeight);
   if ((rectX == c.width - rectWidth || rectX == 0) && !requestID == 0){ //checks for bounce
     xVel = xVel * -1; //reverses velocity
@@ -82,10 +84,12 @@ var drawDvd = function(){
 };
 
 circle.addEventListener("click", function (e){
-  if (requestID != 0){
+  console.log(requestID);
+  if (requestID != 0 && !dvd){
     e.preventDefault();
   }
   else{
+    dvd = false;
     drawDot();
   }
 }
@@ -103,10 +107,14 @@ stopButton.addEventListener("click", function (e){
 );
 
 dvdButton.addEventListener('click', function(e){
-  if (requestID != 0){
+  console.log(requestID);
+  rectX = Math.floor(Math.random() * (c.width-rectWidth));
+  rectY = Math.floor(Math.random() * (c.height-rectHeight));
+  if (requestID != 0 && dvd){
     e.preventDefault();
   }
   else{
+    dvd = true;
     drawDvd();
   }
 }
