@@ -4,7 +4,7 @@
 # 2019-03-04
 
 '''
-datset name: Nobel Prizes
+dataset name: Nobel Prizes
 
 description: Contains a record of all nobel prizes given
 in the years 1901-2018 in the categories: physics, chemistry, medicine,
