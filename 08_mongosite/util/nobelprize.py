@@ -25,17 +25,20 @@ Import mechanism:
 from pymongo import MongoClient
 import json
 
-SERVER_ADDR='104.248.227.121'
+SERVER_ADDR='142.93.126.17'
 client = MongoClient(SERVER_ADDR, 27017)
 db = client.huMONGOus
 collection = db.nobelprize
+
+def changeIP(ip):
+    SERVER_ADDR = ip
 
 def insertData():
     '''
     function to import data from json file and insert into database
     only called once
     '''
-    with open('nobelprize.json') as f:
+    with open('data/nobelprize.json') as f:
         data = json.load(f)
         collection.insert_many(data["prizes"])
 

@@ -5,12 +5,17 @@
 
 
 from flask import Flask, render_template, session, request, url_for, redirect, flash
+from util import nobelprize
 
 app = Flask(__name__)
 
 @app.route("/")
 def hello():
-    return "hello world"
+    if "IP" in request.args:
+        nobelprize.changeIP(request.args("IP"))
+    return render_template("index.html")
+
+
 
 if __name__ == "__main__":
     app.debug = True
