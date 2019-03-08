@@ -28,7 +28,15 @@ db = client.huMONGOus
 collection = db.nobelprize
 
 def changeIP(ip):
+    global SERVER_ADDR
+    global connection
+    global db
+    global collection
+    #client.close()
     SERVER_ADDR = ip
+    client = MongoClient(SERVER_ADDR, 27017)
+    db = client.huMONGOus
+    collection = db.nobelprize
 
 def isEmpty():
     return huMONGOus.nobelprize.find() == []
@@ -40,7 +48,7 @@ def insertData():
     '''
     with open('data/nobelprize.json') as f:
         data = json.load(f)
-        client.drop_database('nobelprize')
+        client.drop_database('huMONGOus')
         collection.insert_many(data["prizes"])
 
 def find_year(year):

@@ -17,11 +17,13 @@ def hello():
 
 @app.route("/results")
 def search():
+    print("+++++++++++++++++++++++++++++++")
+    print(nobelprize.SERVER_ADDR)
     thing = ""
     if "IP" in request.args:
         print(f"this is ip : {request.args.get('IP')}")
-        nobelprize.insertData()
         nobelprize.changeIP(request.args.get("IP"))
+        nobelprize.insertData()
     if "topic" in request.args:
         print(f"topic chosen: {request.args.get('topic')}")
         thing = nobelprize.find_year(request.args.get("topic"))
