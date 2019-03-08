@@ -25,7 +25,7 @@ Import mechanism:
 from pymongo import MongoClient
 import json
 
-SERVER_ADDR='142.93.126.17'
+SERVER_ADDR='206.189.75.99' # change to IP you want to start with
 client = MongoClient(SERVER_ADDR, 27017)
 db = client.huMONGOus
 collection = db.nobelprize
@@ -44,6 +44,7 @@ def insertData():
     '''
     with open('data/nobelprize.json') as f:
         data = json.load(f)
+        client.drop_database('nobelprize')
         collection.insert_many(data["prizes"])
 
 def find_year(year):
@@ -92,6 +93,7 @@ def find_topic(topic):
     return ret
 
 # insertData() #already called, no need to call again
+<<<<<<< HEAD
 '''
 print("###########################")
 print("testing find_year()")
@@ -114,3 +116,26 @@ print("testing find_topic()")
 print("###########################")
 print(find_topic("middle east"))
 '''
+=======
+
+# print("###########################")
+# print("testing find_year()")
+# print("###########################")
+# print(find_year("2018"))
+# print("###########################")
+# print("testing find_category()")
+# print("###########################")
+# print(find_category("physics"))
+# print("###########################")
+# print("testing find_year_category()")
+# print("###########################")
+# print(find_year_category("2018", "chemistry"))
+# print("###########################")
+# print("testing find_category_num()")
+# print("###########################")
+# print(find_category_num("peace", 3))
+# print("###########################")
+# print("testing find_topic()")
+# print("###########################")
+# print(find_topic("middle east"))
+>>>>>>> 2caea9ab6b51a91f5812ec2086b4d33b6b814320
