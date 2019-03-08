@@ -11,19 +11,9 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello():
-<<<<<<< HEAD
-    prizes = []
-    nobelprize.insertData()
-    print(request.args)
-    if "IP" in request.args:
-        nobelprize.changeIP(request.args["IP"])
-    if "year" in request.args:
-        prizes = nobelprize.findyear(request.args["year"])
-    return render_template("index.html", IP = nobelprize.getIP(), results = prizes)
-=======
     nobelprize.insertData()
     return render_template("index.html")
->>>>>>> 2caea9ab6b51a91f5812ec2086b4d33b6b814320
+
 
 @app.route("/results")
 def search():
