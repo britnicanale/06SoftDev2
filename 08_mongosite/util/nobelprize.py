@@ -32,6 +32,10 @@ collection = db.nobelprize
 
 def changeIP(ip):
     SERVER_ADDR = ip
+    print(ip)
+
+def getIP():
+    return SERVER_ADDR
 
 def insertData():
     '''
@@ -88,7 +92,7 @@ def find_topic(topic):
     return ret
 
 # insertData() #already called, no need to call again
-
+'''
 print("###########################")
 print("testing find_year()")
 print("###########################")
@@ -109,3 +113,4 @@ print("###########################")
 print("testing find_topic()")
 print("###########################")
 print(find_topic("middle east"))
+'''

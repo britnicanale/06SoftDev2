@@ -10,15 +10,23 @@
 
     <p>
 
-      <form name="IP" method = "GET">
+      <form name="IP" method = "GET" action="/">
 
-        New IP: <input type = "text" value= "142.93.126.17"> <button type = "submit">Submit</button>
+        New IP: <input type = "text" value= {{IP}}> <button type = "submit" name = "IP">Submit</button>
 
       </form>
 
       Search our database!!
 
-      <form></form>
+      <form name = "year" method = "GET">
+
+        Nobel Prizes in Year:
+
+        <input type = "text" placeholder = "2000"> <button type = "submit"> Find </button>
+
+      </form>
+
+      {{results}}
 
     </p>
 
