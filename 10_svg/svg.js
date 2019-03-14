@@ -1,7 +1,7 @@
 //Britni Canale
 //SoftDev2 Pd06
-//K09 - Connect the Dots ...
-//2019-03-12
+//K10 - Ask Circles [Change || Die]
+//2019-03-13
 
 var pic = document.getElementById("vimage");  //Getting SVG
 
@@ -29,7 +29,7 @@ var addCirc = function(c){
       }else{
         toRandom(c);
       }
-    } 
+    }
   );
 }
 
