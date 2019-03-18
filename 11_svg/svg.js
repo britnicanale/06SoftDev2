@@ -4,7 +4,10 @@
 //2019-03-13
 
 var pic = document.getElementById("vimage");  //Getting SVG
-var x,y
+var mov = document.getElementById("move");
+var xVel = 1;
+var yVel = 1;
+var requestID = 0;
 
 //==========================EVENT LISTENERS ===========================
 
@@ -17,6 +20,26 @@ b.addEventListener('click',
     console.log(e);
   }
 );
+
+mov.addEventListener('click',
+  function(e){
+    e.preventDefault();
+    if(pic.hasChildNodes()){
+      dots = pic.childNodes;
+      console.log(dots)
+      for( i = 0; i < dots.length; i++){
+        let cx = parseInt(dots[i].getAttribute('cx'));
+        let cy = parseInt(dots[i].getAttribute('cy'));
+        let color = dots[i].getAttribute('fill')
+        console.log(cx)
+        console.log(color)
+        move(cx, cy, color)
+      }
+    }
+    console.log(e);
+  }
+
+)
 
 var addCirc = function(c){
   c.addEventListener('click',
@@ -41,39 +64,46 @@ pic.addEventListener('click', function(e){
       //Offset gives difference of pixels between event point and reference point, which is upper left corner of the element in question, the canvas
       x = e.offsetX;
       y = e.offsetY;
-      dot(x,y, e);
+      if(e.target['nodeName']=='circle'){
+        return;
+      }
+      dot(x,y, 'blue');
       console.log(e);
 })
 
 //========================== DRAW & CLEAR FUNCTIONS ==========================
-var dot = function(x, y, e){
+var dot = function(x, y, color){
   var c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
   addCirc(c)
-  if(e.target['nodeName']=='circle'){
-    return;
-  }
   c.setAttribute("r", 10);
   c.setAttribute("cx", x);
   c.setAttribute("cy", y);
   c.setAttribute("stroke", "black");
-  c.setAttribute("fill", "blue");
+  c.setAttribute("fill", color);
   pic.appendChild(c);
+  console.log(c)
 }
 
-var move = function():
-clear();
+var move = function(x, y, color){
+  console.log(x)
+  clear();
   window.cancelAnimationFrame(requestID);
   console.log(requestID);
-
   if ((x >= pic.width - 10 || x <= pic.width + 10) && !requestID == 0){ //checks for bounce
     xVel = xVel * -1; //reverses velocity
+    console.log("bounce")
   }
-  if ((y == pic.height - 10 || rectY == 0) && !requestID == 0){ //checks for bounce
+  if ((y == pic.height - 10 || y <= pic.width + 10) && !requestID == 0){ //checks for bounce
     yVel = yVel * -1; //reverses velocity
+    console.log("bounce")
   }
-  rectX = rectX + xVel; //shows motion
-  rectY = rectY + yVel; //shows motion
-  requestID = window.requestAnimationFrame(drawDvd);
+  x = x + xVel; //shows motion
+  y = y + yVel; //shows motion
+  console.log(x)
+  console.log(y)
+  console.log(color)
+  dot(x, y, color)
+  requestID = window.requestAnimationFrame(move(x, y, color));
 }
 
 var toGreen = function(c){
@@ -90,13 +120,8 @@ var toRandom = function(c){
 }
 
 var clear = function(){
-  var c = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-  c.setAttribute("width", 500);
-  c.setAttribute("height", 500);
-  c.setAttribute("x", 0);
-  c.setAttribute("y", 0);
-  c.setAttribute("fill", "white");
-  c.setAttribute("stroke", "white");
-
-  pic.appendChild(c);
+  window.cancelAnimationFrame(requestID);
+  while(pic.hasChildNodes()){
+    pic.removeChild(pic.childNodes[pic.childNodes.length-1])
+  }
 }
