@@ -5,8 +5,6 @@
 
 var pic = document.getElementById("vimage");  //Getting SVG
 var mov = document.getElementById("move");
-var xVel = 1;
-var yVel = 1;
 var requestID = 0;
 var dots = pic.childNodes
 
@@ -75,12 +73,12 @@ pic.addEventListener('click', function(e){
       if(e.target['nodeName']=='circle'){
         return;
       }
-      dot(x,y, 'blue');
+      dot(x,y, 1, 1,'blue');
       console.log(e);
 })
 
 //========================== DRAW & CLEAR FUNCTIONS ==========================
-var dot = function(x, y, color){
+var dot = function(x, y, xVel, yVel, color){
   var c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
   addCirc(c)
   c.setAttribute("r", 10);
@@ -88,6 +86,8 @@ var dot = function(x, y, color){
   c.setAttribute("cy", y);
   c.setAttribute("stroke", "black");
   c.setAttribute("fill", color);
+  c.setAttribute("xVel", xVel);
+  c.setAttribute("yVel", yVel)
   pic.appendChild(c);
   console.log("circle being added" + c)
   return c;
@@ -104,6 +104,8 @@ var move = function(){
     let x = parseInt(dots[0].getAttribute('cx'))
     let y = parseInt(dots[0].getAttribute('cy'))
     let color = dots[0].getAttribute("fill")
+    let xVel = dots[0].getAttribute("xVel");
+    let yVel = dots[0].getAttribute("yvel");
     if ((x >= 490 || x <= 10) && !requestID == 0){ //checks for bounce
       xVel = xVel * -1; //reverses velocity
       console.log("bounce")
@@ -118,7 +120,7 @@ var move = function(){
     x = x + xVel; //shows motion
     y = y + yVel; //shows motion
     clearOne(dots[0])
-    dot(x, y, color)
+    dot(x, y, xVel, yVel, color)
   }/*
   if ((x >= pic.width - 10 || x <= 10) && !requestID == 0){ //checks for bounce
     xVel = xVel * -1; //reverses velocity
