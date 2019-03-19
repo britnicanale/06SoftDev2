@@ -18,26 +18,12 @@ b.addEventListener('click', function(e){
 
 });
 
-mov.addEventListener('click',
-  function(e){
-    e.preventDefault();
-    if(pic.hasChildNodes()){
-      //dots = pic.childNodes;
-      console.log("circles: " + dots)
-      move()
-      /*for( i = 0; i < dots.length; i++){
-        let cx = parseInt(dots[i].getAttribute('cx'));
-        let cy = parseInt(dots[i].getAttribute('cy'));
-        let color = dots[i].getAttribute('fill')
-        console.log("cx: " +cx)
-        console.log("color: " +color)
-        move()
-      }*/
-    }
-    console.log(e);
-  }
+mov.addEventListener('click', move);
 
-)
+var drop = document.getElementById("drop");
+drop.addEventListener('click', function(e){
+
+});
 
 var stop = document.getElementById("stop");
 stop.addEventListener('click', function(e){
@@ -47,19 +33,15 @@ stop.addEventListener('click', function(e){
 );
 
 
-var addCirc = function(c){
-  c.addEventListener('click',
-    function(e){
-      console.log("Circle")
-      e.preventDefault()
-      if (c.getAttribute("fill") == "blue"){
-        console.log("circle is alrady blue")
-        toGreen(c);
-      }else{
-        toRandom(c);
-      }
-    }
-  );
+var addCirc = function(e){
+  console.log("Circle")
+  e.preventDefault()
+  if (this.getAttribute("fill") == "blue"){
+    console.log("circle is alrady blue")
+    toGreen(this);
+  }else{
+    toRandom(this);
+  }
 }
 
 
@@ -80,64 +62,75 @@ pic.addEventListener('click', function(e){
 //========================== DRAW & CLEAR FUNCTIONS ==========================
 var dot = function(x, y, xVel, yVel, color){
   var c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-  addCirc(c)
+  c.addEventListener('click', addCirc)
   c.setAttribute("r", 10);
   c.setAttribute("cx", x);
   c.setAttribute("cy", y);
   c.setAttribute("stroke", "black");
   c.setAttribute("fill", color);
   c.setAttribute("xVel", xVel);
-  c.setAttribute("yVel", yVel)
+  c.setAttribute("yVel", yVel);
   pic.appendChild(c);
   console.log("circle being added" + c)
   return c;
 }
 
-var move = function(){
-  dots = pic.childNodes;
-  console.log(dots)
-  window.cancelAnimationFrame(requestID);
-  console.log("request ID: " + requestID);
-  for(i = 0; i < dots.length; i++){
-    console.log(dots[0])
-    console.log("moving!")
-    let x = parseInt(dots[0].getAttribute('cx'))
-    let y = parseInt(dots[0].getAttribute('cy'))
-    let color = dots[0].getAttribute("fill")
-    let xVel = dots[0].getAttribute("xVel");
-    let yVel = dots[0].getAttribute("yvel");
-    if ((x >= 490 || x <= 10) && !requestID == 0){ //checks for bounce
+var move = function(e){
+  e.preventDefault();
+  if(pic.hasChildNodes){}
+    dots = pic.childNodes;
+    console.log(dots)
+    window.cancelAnimationFrame(requestID);
+    console.log("request ID: " + requestID);
+    for(i = 0; i < dots.length; i++){
+      console.log(dots[0])
+      console.log("moving!")
+      let x = parseInt(dots[0].getAttribute('cx'))
+      let y = parseInt(dots[0].getAttribute('cy'))
+      let color = dots[0].getAttribute("fill")
+      let xVel = parseInt(dots[0].getAttribute("xVel"));
+      let yVel = parseInt(dots[0].getAttribute("yVel"));
+      console.log("xVel: " + xVel);
+      console.log("yVel: " + yVel);
+      if ((x >= 490 || x <= 10) && !requestID == 0){ //checks for bounce
+        xVel = xVel * -1; //reverses velocity
+        dots[0].setAttribute("xVel", xVel);
+        console.log("xVel: " + xVel);
+        console.log("bounce x")
+      }
+      if ((y >= 490 || y <= 10) && !requestID == 0){ //checks for bounce
+        yVel = yVel * -1; //reverses velocity
+        dots[0].setAttribute("yVel", yVel);
+        console.log("yVel: " + yVel);
+        console.log("bounce y")
+      }
+      console.log("x: " +x)
+      console.log("y: " +y)
+      console.log("color: " +color)
+      x = x + xVel; //shows motion
+      y = y + yVel; //shows motion
+      console.log("xVel: " + xVel);
+      console.log("yVel: " + yVel);
+      clearOne(dots[0])
+      dot(x, y, xVel, yVel, color)
+    }/*
+    if ((x >= pic.width - 10 || x <= 10) && !requestID == 0){ //checks for bounce
       xVel = xVel * -1; //reverses velocity
       console.log("bounce")
     }
-    if ((y >= 490 || y <= 10) && !requestID == 0){ //checks for bounce
+    if ((y >= pic.height - 10 || y <= 10) && !requestID == 0){ //checks for bounce
       yVel = yVel * -1; //reverses velocity
       console.log("bounce")
     }
-    console.log("x: " +x)
-    console.log("y: " +y)
-    console.log("color: " +color)
     x = x + xVel; //shows motion
     y = y + yVel; //shows motion
-    clearOne(dots[0])
-    dot(x, y, xVel, yVel, color)
-  }/*
-  if ((x >= pic.width - 10 || x <= 10) && !requestID == 0){ //checks for bounce
-    xVel = xVel * -1; //reverses velocity
-    console.log("bounce")
-  }
-  if ((y >= pic.height - 10 || y <= 10) && !requestID == 0){ //checks for bounce
-    yVel = yVel * -1; //reverses velocity
-    console.log("bounce")
-  }
-  x = x + xVel; //shows motion
-  y = y + yVel; //shows motion
 
-  console.log("x: " +x)
-  console.log("y: " +y)
-  console.log("color: " +color)*/
-  //dot(x, y, color)
-  requestID = window.requestAnimationFrame(move);
+    console.log("x: " +x)
+    console.log("y: " +y)
+    console.log("color: " +color)*/
+    //dot(x, y, color)
+    requestID = window.requestAnimationFrame(move);
+  }
 }
 
 var toGreen = function(c){
