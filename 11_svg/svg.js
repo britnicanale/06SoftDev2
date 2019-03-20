@@ -1,7 +1,7 @@
 //Britni Canale
 //SoftDev2 Pd06
-//K10 - Ask Circles [Change || Die]
-//2019-03-13
+//K11 - Ask Circles [Change || Die] …While On The Go
+//2019-03-18
 
 var pic = document.getElementById("vimage");  //Getting SVG
 var mov = document.getElementById("move");
