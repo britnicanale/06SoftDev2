@@ -7,6 +7,7 @@ var pic = document.getElementById("vimage");  //Getting SVG
 var mov = document.getElementById("move");
 var requestID = 0;
 var dots = pic.childNodes
+var acc = 1;
 
 //==========================EVENT LISTENERS ===========================
 
@@ -15,14 +16,19 @@ var b = document.getElementById("clear");
 b.addEventListener('click', function(e){
   e.preventDefault();
   clear();
-
 });
 
-mov.addEventListener('click', move);
+mov.addEventListener('click',
+  function(e){
+    e.preventDefault();
+    move()
+});
 
 var drop = document.getElementById("drop");
 drop.addEventListener('click', function(e){
-
+  e.preventDefault();
+  console.log("DROP");
+  fall()
 });
 
 var stop = document.getElementById("stop");
@@ -55,12 +61,12 @@ pic.addEventListener('click', function(e){
       if(e.target['nodeName']=='circle'){
         return;
       }
-      dot(x,y, 1, 1,'blue');
+      dot(x,y, 1, 1,'blue', false);
       console.log(e);
 })
 
 //========================== DRAW & CLEAR FUNCTIONS ==========================
-var dot = function(x, y, xVel, yVel, color){
+var dot = function(x, y, xVel, yVel, color, dropping){
   var c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
   c.addEventListener('click', addCirc)
   c.setAttribute("r", 10);
@@ -70,19 +76,66 @@ var dot = function(x, y, xVel, yVel, color){
   c.setAttribute("fill", color);
   c.setAttribute("xVel", xVel);
   c.setAttribute("yVel", yVel);
+  c.setAttribute("dropping", dropping)
   pic.appendChild(c);
   console.log("circle being added" + c)
   return c;
 }
 
-var move = function(e){
-  e.preventDefault();
-  if(pic.hasChildNodes){}
+var fall = function(){
+  window.cancelAnimationFrame(requestID);
+  if(pic.hasChildNodes){
     dots = pic.childNodes;
     console.log(dots)
     window.cancelAnimationFrame(requestID);
     console.log("request ID: " + requestID);
     for(i = 0; i < dots.length; i++){
+      console.log(dots[0])
+      console.log("Falling!")
+      let x = parseInt(dots[0].getAttribute('cx'))
+      let y = parseInt(dots[0].getAttribute('cy'))
+      let color = dots[0].getAttribute("fill")
+      let dropping = dots[0].getAttribute("dropping");
+      console.log("dropping? " + dropping);
+      if( dropping == "false"){
+        dots[0].setAttribute("yVel", 0);
+        dots[0].setAttribute("dropping",true);
+      }
+      let yVel = parseInt(dots[0].getAttribute("yVel"));
+      let xVel = parseInt(dots[0].getAttribute("xVel"));
+      console.log("yVel: " + yVel);
+      if ((y >= 490 || y <= 10) && !requestID == 0){ //checks for bounce
+        yVel = yVel * -1; //reverses velocity
+        y = 489
+        dots[0].setAttribute("yVel", yVel);
+        console.log("yVel: " + yVel);
+        console.log("bounce y")
+      }
+      console.log("y: " +y)
+      console.log("color: " +color)
+      yVel = yVel + acc;
+      console.log("acc: " +acc);
+      y = y + yVel; //shows motion
+      console.log("yVel: " + yVel);
+      clearOne(dots[0])
+      dot(x, y, xVel, yVel, color, true)
+    }
+    requestID = window.requestAnimationFrame(fall);
+  }
+}
+
+var move = function(){
+  window.cancelAnimationFrame(requestID);
+  if(pic.hasChildNodes){
+    dots = pic.childNodes;
+    console.log(dots)
+    window.cancelAnimationFrame(requestID);
+    console.log("request ID: " + requestID);
+    for(i = 0; i < dots.length; i++){
+      if(dots[0].getAttribute("dropping") == "true"){
+        dots[0].setAttribute("yVel", 1);
+        dots[0].setAttribute("dropping", false);
+      }
       console.log(dots[0])
       console.log("moving!")
       let x = parseInt(dots[0].getAttribute('cx'))
@@ -112,7 +165,7 @@ var move = function(e){
       console.log("xVel: " + xVel);
       console.log("yVel: " + yVel);
       clearOne(dots[0])
-      dot(x, y, xVel, yVel, color)
+      dot(x, y, xVel, yVel, color, false)
     }/*
     if ((x >= pic.width - 10 || x <= 10) && !requestID == 0){ //checks for bounce
       xVel = xVel * -1; //reverses velocity
