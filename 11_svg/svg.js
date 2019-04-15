@@ -2,7 +2,7 @@
 //SoftDev2 Pd06
 //K11 - Ask Circles [Change || Die] …While On The Go
 //2019-03-18
-
+imp
 var pic = document.getElementById("vimage");  //Getting SVG
 var mov = document.getElementById("move");
 var requestID = 0;
