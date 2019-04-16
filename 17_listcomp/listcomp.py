@@ -1,3 +1,8 @@
+#Team BCAN -- Britni Canale & Amit Narang
+#p06 SoftDev2
+#K17: PPFTLCW
+#2019-04-15
+
 import math
 
 one = [str(x*2)*2 for x in range(5)]
@@ -16,6 +21,32 @@ comp = [x for x in range(100) if x not in prime]
 print(comp)
 
 def divisors(n):
-    #divs = [x for x in range(1,n) if float(n/x)== int(n/x)]
+    #divs = []
+    #for x in range(1,n):
+    #    if float(n/x) == int(n/x):
+    #        divs.append(x)
+    divs = [x for x in range(1,n+1) if float(n)/float(x)== int(n/x)]
     return divs
 print(divisors(20))
+print(divisors(9))
+
+def isTrip(c):
+    for a in range(1,c):
+        b = math.sqrt(float(c**2) - float(a**2))
+        if b == int(b):
+            return (a, int(b), c)
+    return (0, 0, 0)
+
+def pythag(n):
+    #trips = []
+    #for c in range(1, n+1):
+    #    if isTrip(c)[0] !=0:
+    #        trips.append(isTrip(c))
+    triplets = [isTrip(c) for c in range(1, n+1) if isTrip(c)[0] != 0]
+    return triplets
+print(pythag(25))
+
+def pythagOne(n):
+    trips = [(a, int(math.sqrt(float(c**2) - float(a**2))), c) for c in range (1, n+1) for a in range(1, c) if math.sqrt(float(c**2) - float(a**2)) == int(math.sqrt(float(c**2) - float(a**2)))]
+print("One line")
+print(pythagOne(25))
