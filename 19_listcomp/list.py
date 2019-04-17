@@ -1,7 +1,7 @@
 #Doggos - Britni Canale & Damian Wasilewicz
 # SoftDev2 pd6
 # K#19 -- Ready, Set, Math!
-# 2019-04-17  
+# 2019-04-17
 #Union
 # def union(A,B):
 #     A.append(B)
@@ -15,6 +15,14 @@
 
 A = [1,2,3]
 B = [2,3,4]
+
+print("A: " + str(A))
+print("B: " + str(B))
+
+def union(A, B):
+    return list(set(A+B))
+print("Union")
+print(union(A,B))
 
 #set difference
 def setDifference(U, A):
