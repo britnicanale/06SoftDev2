@@ -10,9 +10,21 @@
 
 words = ["hello", "my", "name", "is", "Britni", "Britni", "it", "is"]
 
+# def frequency(word):
+#     freq = reduce((lambda x, y: [x]+[y] if y == word else [x]), words)
+#     return freq
+
 def frequency(word):
-    total = 0
-    freq = reduce((lambda x,y : total+1 if x == word else total), words)
+    freq = reduce((lambda x, y: x+[y]), words)
     return freq
 
-print(frequency("hello"))
+# def frequency(word):
+#     total = 0
+#     freq = reduce((lambda x,y : total++ if x == word), words)
+#     return freq
+
+
+
+
+
+print(frequency("Britni"))
