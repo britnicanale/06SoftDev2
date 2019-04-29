@@ -1,3 +1,4 @@
+import functools
 # def frequency(word):
 #     freq = 0
 #     for x in words:
@@ -15,7 +16,7 @@ words = ["hello", "my", "name", "is", "Britni", "Britni", "it", "is"]
 #     return freq
 
 def frequency(word):
-    freq = reduce((lambda x, y: x+[y]), words)
+    freq = functools.reduce((lambda x, y: x + y if y == word else x), words)
     return freq
 
 # def frequency(word):
@@ -27,4 +28,4 @@ def frequency(word):
 
 
 
-print(frequency("Britni"))
+print(frequency("it"))
