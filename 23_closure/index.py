@@ -1,24 +1,20 @@
 import random
 
-def make_HTML_heading(f):
-    def inner():
-        return '<h1>' + f() + '</h1>'
-    return inner
+def memoize(f):
+    memo={}
+    def helper(x):
+        nonlocal memo
+        if x not in memo:
+            memo[x] = f(x)
+        return memo[x]
+    return helper
 
-def greet():
-    greetings = ['wassup', 'hola senor', 'doggo!', 'ayyyy', 'welcome sir']
-    return random.choice(greetings)
+@memoize
+def fib(n):
+    if n == 0:
+        return 0
+    if n == 1:
+        return 1
+    return fib(n-1) + fib(n-2)
 
-greet_heading = make_HTML_heading
-
-print(greet_heading(greet)())
-print(greet_heading(greet)())
-print(greet_heading(greet)())
-print(greet_heading(greet)())
-print(greet_heading(greet)())
-
-greet_heading2 = make_HTML_heading(greet)
-print(greet_heading2())
-print(greet_heading2())
-print(greet_heading2())
-print(greet_heading2())
+print(fib(400))
