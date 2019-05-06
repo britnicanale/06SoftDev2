@@ -1,12 +1,3 @@
-#Britni Canale  & Amit Narang
-#SoftDev2 pd06
-#K#22 - Closure
-#2019-05-01
-
-def repeat(str):
-    def inner(num):
-        return str*num
-    return inner
 
 def make_counter():
     num = [0]
